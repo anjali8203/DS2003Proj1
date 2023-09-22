@@ -1,0 +1,41 @@
+---
+title: "cleaning"
+output: html_document
+date: "2023-09-22"
+---
+
+```{r}
+# load libraries 
+library(readr)
+library(dplyr)
+```
+
+
+```{r}
+# cleaning data 
+data <- read_csv("life expectancy.csv")
+
+# remove corruption file, which has the most NAs 
+rm_corruption <- data[-c(12)]
+
+# rename all columns 
+df <- rm_corruption %>% 
+        rename( "country" = "Country Name",
+               "code" = "Country Code",
+                "region" = "Region", 
+                "inc" = "IncomeGroup",
+                "year" = "Year",
+                "lifespan" = "Life Expectancy World Bank",
+                "starving" = "Prevelance of Undernourishment",
+                "health" = "Health Expenditure %",
+                "edu" = "Education Expenditure %",
+                "unemp" = "Unemployment",
+                "sanitation" = "Sanitation",
+                "injury" = "Injuries",
+                "comm" = "Communicable",
+                "noncomm" = "NonCommunicable"
+               )
+
+```
+
+
