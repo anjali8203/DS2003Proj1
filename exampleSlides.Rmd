@@ -1,0 +1,32 @@
+---
+title: "Midterm Project"
+author: "Mehta, Anjali;"
+date: "2023-10-04"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Slide with Bullets
+
+- hello
+- Bullet 2
+- Bullet 3
+
+## here are the packages we used etc
+
+```{r cars, echo = TRUE}
+library(dplyr)
+library(gapminder)
+library(ggplot2)
+library(gganimate)
+```
+
+## Summary of relevant variables on this slide
+
+```{r pressure}
+summary(diamonds$price)
+```
+
