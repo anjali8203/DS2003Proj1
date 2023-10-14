@@ -44,7 +44,7 @@ library(RColorBrewer)
 
 ggplot(datWorld,aes(x=long,y=lat,group=group,fill=lifespan))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=1)+coord_quickmap()+theme_classic()+theme_void()
 
-datWorld2=datWorld%>%mutate(totDaly=injury+comm+noncomm)
+datWorld2=datWorld%>%mutate(totDaly=((injury+comm+noncomm)/lifespan))
 View(datWorld2)
 
 ggplot(datWorld2,aes(x=long,y=lat,group=group,fill=totDaly))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=-1)+coord_quickmap()+theme_classic()+theme_void()
