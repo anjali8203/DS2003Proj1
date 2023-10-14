@@ -28,25 +28,21 @@ df <- rm_corruption %>%
 View(df)
 
 library(ggplot2)
+library(RColorBrewer)
 world0=map_data("world")
-#ggplot(world,aes(x=long,y=lat,group=group))+geom_polygon(color="white",fill="tomato")+coord_quickmap()
+
 world=world0%>%rename("country"=region)%>%select(-subregion)%>%mutate(country=ifelse(country=="USA","United States",country))
 
-#y=any(world$country == "United States")
+datWorld=full_join(df,world,by="country")%>%select(long,lat,group,order,country,region,lifespan,injury,comm,noncomm,year)%>%filter(year==2019)
 
-#z=df%>%arrange(desc(country))
+# LIFESPAN PLOT 
+ggplot(datWorld,aes(x=long,y=lat,group=group,fill=lifespan))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=1)+coord_quickmap()+theme_classic()+theme_void()+labs(title = "Lifespan by Country", fill = "Total DALYs")+theme(plot.title = element_text(hjust = 0.5))
 
-#datWorld=left_join(df,world,by="country")%>%select(long,lat,group,order,country,region,lifespan,noncomm)
 
-datWorld=full_join(df,world,by="country")%>%select(long,lat,group,order,country,region,lifespan,injury,comm,noncomm)
-
-library(RColorBrewer)
-
-ggplot(datWorld,aes(x=long,y=lat,group=group,fill=lifespan))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=1)+coord_quickmap()+theme_classic()+theme_void()
-
-datWorld2=datWorld%>%mutate(totDaly=((injury+comm+noncomm)/lifespan))
+datWorld2=datWorld%>%filter(year==2019)%>%mutate(totDaly=((injury+comm+noncomm)/lifespan))
 View(datWorld2)
 
-ggplot(datWorld2,aes(x=long,y=lat,group=group,fill=totDaly))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=-1)+coord_quickmap()+theme_classic()+theme_void()
+# DALYS PLOT 
+ggplot(datWorld2,aes(x=long,y=lat,group=group,fill=totDaly))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=-1)+coord_quickmap()+theme_classic()+theme_void()+labs(title = "Total DALYs by Country (Injury, Comm, Noncomm)", fill = "Total DALYs")+theme(plot.title = element_text(hjust = 0.5))
 
 
