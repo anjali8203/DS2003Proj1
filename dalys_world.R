@@ -36,7 +36,7 @@ world=world0%>%rename("country"=region)%>%select(-subregion)%>%mutate(country=if
 datWorld=full_join(df,world,by="country")%>%select(long,lat,group,order,country,region,lifespan,injury,comm,noncomm,year)%>%filter(year==2019)
 
 # LIFESPAN PLOT 
-ggplot(datWorld,aes(x=long,y=lat,group=group,fill=lifespan))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=1)+coord_quickmap()+theme_classic()+theme_void()+labs(title = "Lifespan by Country", fill = "Total DALYs")+theme(plot.title = element_text(hjust = 0.5))
+ggplot(datWorld,aes(x=long,y=lat,group=group,fill=lifespan))+geom_polygon(color="white")+scale_fill_distiller(palette="Spectral",direction=1)+coord_quickmap()+theme_classic()+theme_void()+labs(title = "Lifespan by Country", fill = "Lifespan Years")+theme(plot.title = element_text(hjust = 0.5))
 
 
 datWorld2=datWorld%>%filter(year==2019)%>%mutate(totDaly=((injury+comm+noncomm)))
